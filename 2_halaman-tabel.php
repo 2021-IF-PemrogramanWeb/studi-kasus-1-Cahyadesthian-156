@@ -1,4 +1,10 @@
 <?php 
+session_start();
+
+if(!isset($_SESSION['login'])) {
+    header("Location: 1_halaman1-login.php");
+    exit;
+}
 
 require_once 'functions.php';
 
@@ -81,7 +87,7 @@ if(isset($_POST['cari'])) {
               <button type="button" class="btn btn-info">Export</button>
             </div>
             <div class="row py-1">
-              <button type="button" class="btn btn-danger">Logout</button>
+              <a href="logout.php" type="button" class="btn btn-danger">Logout</a>
             </div>
 
             <!-- mobil1 -->

@@ -107,3 +107,25 @@ function cari($keyword) {
     return $rows;
 
 }
+
+
+function login($dataLogin) {
+    $conn = koneksi();
+
+    $username = htmlspecialchars($dataLogin['username']);
+    $password = htmlspecialchars($dataLogin['password']);
+
+    if(query("SELECT * FROM user WHERE USR_USERNAME = '$username' && USR_PASSSWORD = '$password' ")) {
+
+        $_SESSION['login'] = true;
+
+        header("Location: 2_halaman-tabel.php");
+    } else {
+        return [
+            'error' => true,
+            'pesan' => 'Username/Password Salah!'
+        ];
+    }
+
+
+}
