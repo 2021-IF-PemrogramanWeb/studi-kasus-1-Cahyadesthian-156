@@ -7,9 +7,14 @@ require_once 'functions.php';
 // echo "</pre>";
 
 
+
 //ubah dalam bentuk array
 $dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=1");
 
+
+if(isset($_POST['cari'])) {
+    $dataKejadian = cari($_POST['keyword']);
+}
 
 ?>
 
@@ -23,6 +28,10 @@ $dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=1");
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+
   </head>
   <body>
     <!-- Navbar -->
@@ -43,6 +52,19 @@ $dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=1");
       </div>
     </nav>
     <!-- Closing Navbar -->
+
+    <div class="container">
+        <form action="" method="POST">
+            <div class="input-group mt-5">
+                <input type="text" class="form-control" placeholder="keyword pencarian" autocomplete="off" name="keyword">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" name="cari">Cari</button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+    
 
     <!-- Button and Table -->
     <section id="button-table" class="p-5">
@@ -87,22 +109,34 @@ $dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=1");
                 <tr class="text-center">
                   <th scope="col">No</th>
                   <th scope="col">On</th>
-                  <th scope="col">Of</th>
+                  <th scope="col">Off</th>
                   <th scope="col">Ack by</th>
                   <th scope="col">Reason</th>
+                  <th scope="col">Edit</th>
                 </tr>
               </thead>
 
+              <?php if(empty($dataKejadian)) : ?>
+                <tr>
+                    <td colspan="6"><p>Data Not Found</p></td>
+                </tr>
+              <?php endif; ?>
+
               <tbody>
-                <?php foreach($dataKejadian as $datKej) :  ?>
+                <?php $i = 1;
+                 foreach($dataKejadian as $datKej) :  ?>
 
                 <tr>
-                  <th scope="row"> <?=  $datKej['KJD_ID']; ?> </th>
+                  <th scope="row"> <?=  $i++; ?> </th>
                   <td> <?= $datKej['KJD_ON']; ?> </td>
                   <td> <?= $datKej['KJD_OF']; ?> </td>
                   <td>Act: <?= $datKej['KJD_ACT']; ?> 
                      <br>Dis: <?= $datKej['KJD_DIS']; ?> 
                   <td> <?= $datKej['R_ID_KJD']; ?></td>
+                  <td class="text-center">
+                      <a href="ubah.php?KJD_ID=<?= $datKej['KJD_ID']; ?>"><i class="bi bi-pencil-square"></i></a> 
+                      <a href="hapus.php?KJD_ID=<?= $datKej['KJD_ID'];  ?> " onclick="return confirm('Hapus Data?');" ><i class="bi bi-trash-fill"></i></a> 
+                  </td>
                 </tr>
                 <?php endforeach; ?>
               </tbody>
