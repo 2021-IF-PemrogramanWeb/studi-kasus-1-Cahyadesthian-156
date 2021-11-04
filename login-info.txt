@@ -1,0 +1,11 @@
+[User ID = 1]
+username : agniasari
+password : agniasariPass
+
+[User ID = 2]
+username : kencana
+password : kencanaPass
+
+[User ID = 3]
+username : sasmaya
+password : sasmayaPass
