@@ -9,21 +9,24 @@ if(!isset($_SESSION['login'])) {
 
 require_once 'functions.php';
 
-//jika URL tidak mengandung ID
-if(!isset($_GET['KJD_ID'])) {
-    header("Location: 2_halaman-tabel.php");
+
+//ambil id dari URL
+$idKej = $_GET['KJD_ID'];
+$idLogin = $_GET['USR_ID'];
+
+//jika URL tidak mengandung ID kejadian 
+if( !isset($_GET['KJD_ID']) OR !isset($_GET['USR_ID'])) {
+    header("Location: 2_halaman-tabel.php?USR_ID=$idLogin");
     exit;
 }
 
 
-//ambil id dari URL
-$idKej = $_GET['KJD_ID'];
 
 //query
 $datKej = query("SELECT * FROM kejadian WHERE KJD_ID = $idKej");
-    echo '<pre>';
-    var_dump($datKej);
-    echo '</pre>';
+    // echo '<pre>';
+    // var_dump($datKej);
+    // echo '</pre>';
 
 
 if(isset($_POST['ubah'])) {
@@ -34,7 +37,7 @@ if(isset($_POST['ubah'])) {
         //echo "data berhasil ditambahkan";
         echo "<script>
                 alert('data berhasil diubah');
-                document.location.href = '2_halaman-tabel.php';
+                document.location.href = '2_halaman-tabel.php?USR_ID=$idLogin';
             </script>";
     } else {
         echo "data gagal diubah!";

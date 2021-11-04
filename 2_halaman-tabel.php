@@ -8,14 +8,34 @@ if(!isset($_SESSION['login'])) {
 
 require_once 'functions.php';
 
+
 // echo "<pre>";
 // echo var_dump($rows);
 // echo "</pre>";
 
+//jika URL tidak mengandung ID
+if(!isset($_GET['USR_ID'])) {
+  header("Location: 1_halaman1-login.php");
+  exit;
+}
+
+$idOrangLogin = $_GET['USR_ID'];
+
 
 
 //ubah dalam bentuk array
-$dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=1");
+$dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=$idOrangLogin");
+
+
+// echo "<pre>";
+// echo var_dump($dataKejadian);
+// echo "</pre>";
+
+
+$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idOrangLogin");
+// echo "<pre>";
+// echo var_dump($yangLogin);
+// echo "</pre>";
 
 
 if(isset($_POST['cari'])) {
@@ -46,12 +66,13 @@ if(isset($_POST['cari'])) {
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
         </a>
-        29 Oktober 2021
+        <?php echo date("l"). ", " . date("Y/m/d"); ?>
+        
 
         <div class="">
           <div class="navbar-nav ms-auto container-fluid">
             <a href="">
-              <img src="photo/agniasari.jpg" width="30" class="rounded-circle d-inline-block align-text-top" />
+              <img src="photo/<?= $yangLogin['USR_PHOTO']; ?>" height="30" class="rounded-circle d-inline-block align-text-top" />
             </a>
           </div>
         </div>
@@ -62,7 +83,7 @@ if(isset($_POST['cari'])) {
     <div class="container">
         <form action="" method="POST">
             <div class="input-group mt-5">
-                <input type="text" class="form-control" placeholder="keyword pencarian" autocomplete="off" name="keyword">
+                <input type="text" class="form-control" placeholder="Act by or Dis By" autocomplete="off" name="keyword">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" name="cari">Cari</button>
                 </div>
@@ -78,10 +99,10 @@ if(isset($_POST['cari'])) {
         <div class="row g-4">
           <div class="col">
             <div class="row py-1">
-              <a href="tambah.php" type="button" class="btn btn-success">Add</a>
+              <a href="tambah.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-success">Add</a>
             </div>
             <div class="row py-1">
-              <button type="button" class="btn btn-warning">Graph</button>
+              <a href="3_halaman-grafik.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-warning">Graph</a>
             </div>
             <div class="row py-1">
               <button type="button" class="btn btn-info">Export</button>
@@ -140,8 +161,8 @@ if(isset($_POST['cari'])) {
                      <br>Dis: <?= $datKej['KJD_DIS']; ?> 
                   <td> <?= $datKej['R_ID_KJD']; ?></td>
                   <td class="text-center">
-                      <a href="ubah.php?KJD_ID=<?= $datKej['KJD_ID']; ?>"><i class="bi bi-pencil-square"></i></a> 
-                      <a href="hapus.php?KJD_ID=<?= $datKej['KJD_ID'];  ?> " onclick="return confirm('Hapus Data?');" ><i class="bi bi-trash-fill"></i></a> 
+                      <a href="ubah.php?USR_ID=<?=$idOrangLogin; ?>&KJD_ID=<?= $datKej['KJD_ID']; ?>"><i class="bi bi-pencil-square"></i></a> 
+                      <a href="hapus.php?USR_ID=<?=$idOrangLogin; ?>&KJD_ID=<?= $datKej['KJD_ID'];  ?>" onclick="return confirm('Hapus Data?');" ><i class="bi bi-trash-fill"></i></a> 
                   </td>
                 </tr>
                 <?php endforeach; ?>

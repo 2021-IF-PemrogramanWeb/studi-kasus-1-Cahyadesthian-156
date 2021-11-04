@@ -108,18 +108,29 @@ function cari($keyword) {
 
 }
 
-
 function login($dataLogin) {
     $conn = koneksi();
 
     $username = htmlspecialchars($dataLogin['username']);
     $password = htmlspecialchars($dataLogin['password']);
 
-    if(query("SELECT * FROM user WHERE USR_USERNAME = '$username' && USR_PASSSWORD = '$password' ")) {
+    $query = "SELECT * FROM user
+                WHERE  
+                USR_USERNAME = '$username' && USR_PASSSWORD = '$password' && 
+                (SELECT USR_ID FROM user WHERE USR_USERNAME = '$username' );
+            ";
+    $result = mysqli_query($conn, $query);
 
+    if(mysqli_num_rows($result) == 1) {
+
+        $row = mysqli_fetch_assoc($result);
+        $idLogged = $row['USR_ID'];
         $_SESSION['login'] = true;
-
-        header("Location: 2_halaman-tabel.php");
+        header("Location: 2_halaman-tabel.php?USR_ID=$idLogged");
+        // echo "<pre>";
+        // echo var_dump($row);
+        // echo "</pre>";
+        //return mysqli_fetch_assoc($result);
     } else {
         return [
             'error' => true,
@@ -127,5 +138,92 @@ function login($dataLogin) {
         ];
     }
 
+    
+
 
 }
+
+// function login($dataLogin) {
+//     $conn = koneksi();
+
+//     $username = htmlspecialchars($dataLogin['username']);
+//     $password = htmlspecialchars($dataLogin['password']);
+
+//     $query = "SELECT * FROM user
+//                 WHERE  
+//                 USR_USERNAME = '$username' && USR_PASSSWORD = '$password' && 
+//                 (SELECT USR_ID FROM user WHERE USR_USERNAME = '$username' );
+//             ";
+//     $result = mysqli_query($conn, $query);
+
+//     if(mysqli_num_rows($result) == 1) {
+
+//         $row = mysqli_fetch_assoc($result);
+//         // echo "<pre>";
+//         // echo var_dump($row);
+//         // echo "</pre>";
+//         //return mysqli_fetch_assoc($result);
+//     }
+
+//     $idLogged = $row['USR_ID'];
+    
+
+//     // $rows = [];
+//     // while($row = mysqli_fetch_assoc($result)) {
+//     //     $rows[] = $row;
+//     // }
+//     // echo "<pre>";
+//     // echo var_dump($rows);
+//     // echo "</pre>";
+
+
+//     // exit;
+//     if($result) {
+        
+//         $_SESSION['login'] = true;
+//         // echo "<pre>";
+//         // echo var_dump($loginUser);
+//         // echo "</pre>";
+
+//         header("Location: 2_halaman-tabel.php?USR_ID=$idLogged");
+//     } else {
+//         return [
+//             'error' => true,
+//             'pesan' => 'Username/Password Salah!'
+//         ];
+//     }
+
+
+// }
+
+
+// function login($dataLogin) {
+//     $conn = koneksi();
+
+//     $username = htmlspecialchars($dataLogin['username']);
+//     $password = htmlspecialchars($dataLogin['password']);
+
+//     $idLogin = query("SELECT USR_ID FROM user WHERE USR_USERNAME = '$username' " );
+//     $dataLogin['login'] = $idLogin; 
+
+//     $loginUser = query("SELECT * FROM user WHERE USR_USERNAME = '$username' && USR_PASSSWORD = '$password' ");
+
+//     //if(query("SELECT * FROM user WHERE USR_USERNAME = '$username' && USR_PASSSWORD = '$password' ")) {
+
+//         if($loginUser) {
+        
+//         $_SESSION['login'] = true;
+//         echo "<pre>";
+//         echo var_dump($dataLogin);
+//         echo "</pre>";
+
+//         header("Location: 2_halaman-tabel.php");
+//     } else {
+//         return [
+//             'error' => true,
+//             'pesan' => 'Username/Password Salah!'
+//         ];
+//     }
+
+
+// }

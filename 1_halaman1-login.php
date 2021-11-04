@@ -3,6 +3,9 @@ session_start();
 
 if(isset($_SESSION['login'])) {
   header("Location: 2_halaman-tabel.php");
+  // echo "<pre>";
+  // echo var_dump($login);
+  // echo "</pre>";
   exit;
 }
 

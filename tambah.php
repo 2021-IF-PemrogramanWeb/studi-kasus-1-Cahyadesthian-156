@@ -7,6 +7,15 @@ if(!isset($_SESSION['login'])) {
 }
 require 'functions.php';
 
+//jika URL tidak mengandung Userid
+if( !isset($_GET['USR_ID']) ) {
+    header("Location: 1_halaman1-login.php");
+    exit;
+}
+
+//ambil id dari URL
+$idUser = $_GET['USR_ID'];
+
 if(isset($_POST['tambah'])) {
     // echo '<pre>';
     // var_dump($_POST);
@@ -15,7 +24,7 @@ if(isset($_POST['tambah'])) {
         //echo "data berhasil ditambahkan";
         echo "<script>
                alert('data berhasil ditambahkan');
-               document.location.href = '2_halaman-tabel.php';
+               document.location.href = '2_halaman-tabel.php?USR_ID=$idUser';
             </script>";
     } else {
         echo "data gagal ditambahkan!";
