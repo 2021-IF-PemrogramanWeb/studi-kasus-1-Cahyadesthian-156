@@ -20,7 +20,10 @@ if( !isset($_GET['KJD_ID']) OR !isset($_GET['USR_ID'])) {
     exit;
 }
 
-
+$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idLogin");
+// echo "<pre>";
+// echo var_dump($yangLogin);
+// echo "</pre>";
 
 //query
 $datKej = query("SELECT * FROM kejadian WHERE KJD_ID = $idKej");
@@ -57,11 +60,34 @@ if(isset($_POST['ubah'])) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <!-- bootstarpi icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+
     <title>Ubah Data</title>
   </head>
   <body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
+        </a> 
+        <?php echo date("l"). ", " . date("Y/m/d") . " | " . $yangLogin['USR_NAME'] ; ?>
+        
+
+        <div class="">
+          <div class="navbar-nav ms-auto container-fluid">
+            <a href="">
+              <img src="photo/<?= $yangLogin['USR_PHOTO']; ?>" height="30" class="rounded-circle d-inline-block align-text-top" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Closing Navbar -->
     
-  <h3>Form Ubah Data</h3>
+  <h3 class="text-center pt-5">Form Ubah Data</h3>
   <div class="container">
 
   <form action="" method="POST">
@@ -91,9 +117,10 @@ if(isset($_POST['ubah'])) {
         </div>
         <div class="form-group">
             <label>User ID</label>
-            <input value="<?= $datKej['USR_ID_KJD']?>" type="number" class="form-control" name="USR_ID_KJD" required>
+            <input value="<?= $datKej['USR_ID_KJD']?>" type="number" class="form-control" name="USR_ID_KJD" readonly required>
         </div>
-        <button type="submit" class="btn btn-primary" name="ubah">Update</button>
+        <button type="submit" class="btn btn-primary mt-2" name="ubah"><i class="bi bi-arrow-up-circle-fill"></i> Update</button>
+        <a href="2_halaman-tabel.php?USR_ID=<?= $idLogin; ?>" type="button" class="btn btn-warning mt-2"><i class="bi bi-table"></i> Kembali</a>
     </form>
 
   </div>

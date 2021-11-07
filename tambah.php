@@ -16,6 +16,11 @@ if( !isset($_GET['USR_ID']) ) {
 //ambil id dari URL
 $idUser = $_GET['USR_ID'];
 
+$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idUser");
+// echo "<pre>";
+// echo var_dump($yangLogin);
+// echo "</pre>";
+
 if(isset($_POST['tambah'])) {
     // echo '<pre>';
     // var_dump($_POST);
@@ -44,11 +49,37 @@ if(isset($_POST['tambah'])) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+
     <title>Tambah Data</title>
   </head>
   <body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
+        </a> 
+        <?php echo date("l"). ", " . date("Y/m/d") . " | " . $yangLogin['USR_NAME'] ; ?>
+        
+
+        <div class="">
+          <div class="navbar-nav ms-auto container-fluid">
+            <a href="">
+              <img src="photo/<?= $yangLogin['USR_PHOTO']; ?>" height="30" class="rounded-circle d-inline-block align-text-top" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Closing Navbar -->
     
   <div class="container">
+
+
+  <h3 class="text-center pt-5">Form Tambah Data</h3>
 
   <form action="" method="POST">
         <div class="form-group">
@@ -75,7 +106,8 @@ if(isset($_POST['tambah'])) {
             <label>User ID</label>
             <input type="number" class="form-control" name="USR_ID_KJD" required>
         </div>
-        <button type="submit" class="btn btn-primary" name="tambah">Submit</button>
+        <button type="submit" class="btn btn-primary mt-2" name="tambah"><i class="bi bi-cloud-arrow-up-fill"></i> Submit</button>
+        <a href="2_halaman-tabel.php?USR_ID=<?= $idUser; ?>" type="button" class="btn btn-warning mt-2"><i class="bi bi-table"></i> Kembali</a>
     </form>
 
   </div>

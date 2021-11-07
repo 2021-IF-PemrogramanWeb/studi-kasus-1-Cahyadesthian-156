@@ -8,6 +8,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- Bootstrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+
     <title>Studi Kasus 1</title>
   </head>
   <body>
@@ -21,19 +24,21 @@
                 <div class="card">
                 <img src="photo/agniasari.jpg" class="card-img-top" alt="user1">
                 <div class="card-body">
-                    <h5 class="card-title">Username : agniasari</h5>
-                    <p class="card-text">Password : agniasariPass </p>
+                    <h5 class="card-title text-center">User 1 : Agniasari Candramaya</h5>
+                    <p class="card-text"><i class="bi bi-person-circle"></i> Username : agniasari </p>
+                    <p class="card-text"><i class="bi bi-key-fill"></i> Password : agniasariPass </p>
                 </div>
                 </div>
             </div>
 
             <!-- card 2 -->
             <div class="col">
-                <div class="card">
+                <div class="card ">
                 <img src="photo/kencana.jpg" class="card-img-top" alt="user2">
                 <div class="card-body">
-                    <h5 class="card-title">Username : kencana</h5>
-                    <p class="card-text">Password : kencanaPass</p>
+                    <h5 class="card-title text-center">User 2 : Kencana Nindita</h5>
+                    <p class="card-text"><i class="bi bi-person-circle"></i> Username : kencana</p>
+                    <p class="card-text"><i class="bi bi-key-fill"></i> Password : kencanaPass</p>
                 </div>
                 </div>
             </div>
@@ -43,8 +48,9 @@
                 <div class="card">
                 <img src="photo/sasmaya.jpg" class="card-img-top" alt="user3">
                 <div class="card-body">
-                    <h5 class="card-title">Username : sasmaya</h5>
-                    <p class="card-text">Password : sasmayaPass</p>
+                    <h5 class="card-title text-center">User 3 : Sasmaya Ratimaya</h5>
+                    <p class="card-text"><i class="bi bi-person-circle"></i> Username : sasmaya</p>
+                    <p class="card-text"><i class="bi bi-key-fill"></i> Password : sasmayaPass</p>
                 </div>
                 </div>
             </div>
@@ -56,8 +62,8 @@
             <div class="col text-center">
                 <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Halaman Login</h5>
-                    <a href="1_halaman1-login.php" class="btn btn-primary"> Login </a>
+                    <h5 class="card-title">ke Halaman Login</h5>
+                    <a href="1_halaman1-login.php" class="btn btn-primary"><i class="bi bi-door-open-fill"></i> Login </a>
                 </div>
                 </div>
             </div>

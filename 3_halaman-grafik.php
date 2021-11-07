@@ -127,6 +127,10 @@ $labelData16 = $label16Temp['R_DESC'];
 
     <!-- bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+
+    <!-- bootstrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+
   </head>
   <body>
 
@@ -136,7 +140,7 @@ $labelData16 = $label16Temp['R_DESC'];
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
         </a>
-        <?php echo date("l"). ", " . date("Y/m/d"); ?>
+        <?php echo date("l"). ", " . date("Y/m/d") . " | " . $yangLogin['USR_NAME']; ?>
         
 
         <div class="">
@@ -156,8 +160,8 @@ $labelData16 = $label16Temp['R_DESC'];
     </div>
 
     <div class="container my-5">
-    <a href="2_halaman-tabel.php?USR_ID=<?= $idLogin; ?>" type="button" class="btn btn-warning">Table</a>
-    <a href="logout.php" type="button" class="btn btn-danger">Logut</a>
+    <a href="2_halaman-tabel.php?USR_ID=<?= $idLogin; ?>" type="button" class="btn btn-warning"><i class="bi bi-table"></i> Table</a>
+    <a href="logout.php" type="button" class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> Logout</a>
     </div>
 
     <script>

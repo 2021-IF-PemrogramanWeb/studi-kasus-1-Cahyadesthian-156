@@ -88,14 +88,21 @@ function ubah($idKej) {
 }
 
 
-function cari($keyword) {
+function cari($keyword , $someoneLogged) {
     $conn = koneksi();
 
-    $query = "SELECT * FROM kejadian
+    $query = "SELECT KJD_ID, KJD_ON, KJD_OF, KJD_ACT, KJD_DIS, R_ID_KJD, USR_ID_KJD, R_DESC 
+                FROM kejadian INNER JOIN reason ON kejadian.R_ID_KJD = reason.R_ID
                 WHERE  
-                KJD_ACT LIKE '%$keyword%' OR
-                KJD_DIS LIKE '%$keyword%'
+                (KJD_ACT LIKE '%$keyword%' OR
+                KJD_DIS LIKE '%$keyword%') AND
+                USR_ID_KJD = $someoneLogged
+                ORDER BY KJD_ID	
             ";
+
+// $dataKejadian = query("SELECT KJD_ID, KJD_ON, KJD_OF, KJD_ACT, KJD_DIS, R_ID_KJD, USR_ID_KJD, R_DESC 
+// FROM kejadian INNER JOIN reason ON kejadian.R_ID_KJD = reason.R_ID 
+// WHERE USR_ID_KJD=$idOrangLogin");
 
     $result = mysqli_query($conn, $query);
 
@@ -121,7 +128,7 @@ function login($dataLogin) {
             ";
     $result = mysqli_query($conn, $query);
 
-    if(mysqli_num_rows($result) == 1) {
+    if(mysqli_num_rows($result) === 1) {
 
         $row = mysqli_fetch_assoc($result);
         $idLogged = $row['USR_ID'];

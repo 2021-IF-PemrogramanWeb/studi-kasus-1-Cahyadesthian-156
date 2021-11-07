@@ -1,6 +1,8 @@
 <?php 
 session_start();
 
+
+
 if(!isset($_SESSION['login'])) {
     header("Location: 1_halaman1-login.php");
     exit;
@@ -22,9 +24,11 @@ if(!isset($_GET['USR_ID'])) {
 $idOrangLogin = $_GET['USR_ID'];
 
 
-
 //ubah dalam bentuk array
-$dataKejadian = query("SELECT * FROM kejadian WHERE USR_ID_KJD=$idOrangLogin");
+$dataKejadian = query("SELECT KJD_ID, KJD_ON, KJD_OF, KJD_ACT, KJD_DIS, R_ID_KJD, USR_ID_KJD, R_DESC 
+                        FROM kejadian INNER JOIN reason ON kejadian.R_ID_KJD = reason.R_ID 
+                        WHERE USR_ID_KJD=$idOrangLogin
+                        ORDER BY KJD_ID");
 
 
 // echo "<pre>";
@@ -37,9 +41,14 @@ $yangLogin = query("SELECT * FROM user WHERE USR_ID = $idOrangLogin");
 // echo var_dump($yangLogin);
 // echo "</pre>";
 
+// $namaKejadian = query("SELECT * FROM reason");
+// echo "<pre>";
+// echo var_dump($namaKejadian);
+// echo "</pre>";
+
 
 if(isset($_POST['cari'])) {
-    $dataKejadian = cari($_POST['keyword']);
+    $dataKejadian = cari( $_POST['keyword'], $idOrangLogin );
 }
 
 ?>
@@ -65,8 +74,8 @@ if(isset($_POST['cari'])) {
       <div class="container">
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
-        </a>
-        <?php echo date("l"). ", " . date("Y/m/d"); ?>
+        </a> 
+        <?php echo date("l"). ", " . date("Y/m/d") . " | " . $yangLogin['USR_NAME'] ; ?>
         
 
         <div class="">
@@ -85,7 +94,7 @@ if(isset($_POST['cari'])) {
             <div class="input-group mt-5">
                 <input type="text" class="form-control" placeholder="Act by or Dis By" autocomplete="off" name="keyword">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit" name="cari">Cari</button>
+                    <button class="btn btn-outline-secondary" type="submit" name="cari"><i class="bi bi-search"></i> Cari</button>
                 </div>
             </div>
         </form>
@@ -99,16 +108,16 @@ if(isset($_POST['cari'])) {
         <div class="row g-4">
           <div class="col">
             <div class="row py-1">
-              <a href="tambah.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-success">Add</a>
+              <a href="tambah.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i> Add</a>
             </div>
             <div class="row py-1">
-              <a href="3_halaman-grafik.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-warning">Graph</a>
+              <a href="3_halaman-grafik.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-warning"><i class="bi bi-file-bar-graph-fill"></i> Graph</a>
             </div>
             <div class="row py-1">
-              <button type="button" class="btn btn-info">Export</button>
+              <button type="button" class="btn btn-info" disabled>Export</button>
             </div>
             <div class="row py-1">
-              <a href="logout.php" type="button" class="btn btn-danger">Logout</a>
+              <a href="logout.php" type="button" class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> Logout</a>
             </div>
 
             <!-- mobil1 -->
@@ -159,7 +168,7 @@ if(isset($_POST['cari'])) {
                   <td> <?= $datKej['KJD_OF']; ?> </td>
                   <td>Act: <?= $datKej['KJD_ACT']; ?> 
                      <br>Dis: <?= $datKej['KJD_DIS']; ?> 
-                  <td> <?= $datKej['R_ID_KJD']; ?></td>
+                  <td> <?= $datKej['R_DESC']; ?></td>
                   <td class="text-center">
                       <a href="ubah.php?USR_ID=<?=$idOrangLogin; ?>&KJD_ID=<?= $datKej['KJD_ID']; ?>"><i class="bi bi-pencil-square"></i></a> 
                       <a href="hapus.php?USR_ID=<?=$idOrangLogin; ?>&KJD_ID=<?= $datKej['KJD_ID'];  ?>" onclick="return confirm('Hapus Data?');" ><i class="bi bi-trash-fill"></i></a> 
