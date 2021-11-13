@@ -49,7 +49,7 @@ if(!isset($_GET["log"])) {
           </div>
 
           <div class="form-floating">
-            <input type="password" class="form-control" placeholder="Password" name="password">
+            <input type="password" class="form-control" placeholder="Password" name="password" required>
             <label >Password</label>
           </div>
       

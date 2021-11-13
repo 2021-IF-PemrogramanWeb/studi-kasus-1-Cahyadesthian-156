@@ -153,7 +153,7 @@ $labelData16 = $label16Temp['R_DESC'];
     </div>
 
     <div class="container my-5">
-    <a href="2_halaman-tabel.php?USR_ID=<?= $idLogin; ?>" type="button" class="btn btn-warning"><i class="bi bi-table"></i> Table</a>
+    <a href="2_halaman-tabel.php" type="button" class="btn btn-warning"><i class="bi bi-table"></i> Table</a>
     <a href="logout.php" type="button" class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> Logout</a>
     </div>
 

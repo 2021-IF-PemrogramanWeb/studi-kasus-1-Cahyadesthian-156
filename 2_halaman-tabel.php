@@ -116,7 +116,7 @@ if( isset($_POST["cari"]) ) {
             </div>
 
             <div class="row py-1">
-              <a href="#" type="button" class="btn btn-info"><i class="bi bi-printer"> </i>Export</a>
+              <a href="export.php" target="_blank" type="button" class="btn btn-info"><i class="bi bi-printer"> </i>Export</a>
             </div>
 
             <div class="row py-1">
