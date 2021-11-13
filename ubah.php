@@ -9,41 +9,29 @@ if(!isset($_SESSION['login'])) {
 
 require_once 'functions.php';
 
+$idLogged = $_SESSION["user_id"];
+$someoneData = query("SELECT * FROM user WHERE USR_ID = $idLogged");
 
-//ambil id dari URL
-$idKej = $_GET['KJD_ID'];
-$idLogin = $_GET['USR_ID'];
-
-//jika URL tidak mengandung ID kejadian 
-if( !isset($_GET['KJD_ID']) OR !isset($_GET['USR_ID'])) {
-    header("Location: 2_halaman-tabel.php?USR_ID=$idLogin");
-    exit;
-}
-
-$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idLogin");
-// echo "<pre>";
-// echo var_dump($yangLogin);
-// echo "</pre>";
+$idToUpdate = $_POST["KJD_ID"];
 
 //query
-$datKej = query("SELECT * FROM kejadian WHERE KJD_ID = $idKej");
-    // echo '<pre>';
-    // var_dump($datKej);
-    // echo '</pre>';
+$datKej = query("SELECT * FROM kejadian WHERE KJD_ID = $idToUpdate");
+    
 
-
-if(isset($_POST['ubah'])) {
-    // echo '<pre>';
-    // var_dump($_POST);
-    // echo '</pre>';
-    if( ubah($_POST)  > 0 ) {
+if( isset($_POST['update']) ) {
+    if ( ubah($_POST) > 0 ) {
         //echo "data berhasil ditambahkan";
         echo "<script>
                 alert('data berhasil diubah');
-                document.location.href = '2_halaman-tabel.php?USR_ID=$idLogin';
+                document.location.href = '2_halaman-tabel.php';
             </script>";
     } else {
-        echo "data gagal diubah!";
+        echo "
+          <script>
+            alert('data gagal diubah');
+            document.location.href = '2_halaman-tabel.php';
+          </script>
+        ";
     }
 }
 
@@ -73,13 +61,13 @@ if(isset($_POST['ubah'])) {
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
         </a> 
-        <?php echo date("l"). ", " . date("Y/m/d") . " | " . $yangLogin['USR_NAME'] ; ?>
+        <?php echo date("l"). ", " . date("Y/m/d") . " | " . $someoneData['USR_NAME'] ; ?>
         
 
         <div class="">
           <div class="navbar-nav ms-auto container-fluid">
             <a href="">
-              <img src="photo/<?= $yangLogin['USR_PHOTO']; ?>" height="30" class="rounded-circle d-inline-block align-text-top" />
+              <img src="photo/<?= $someoneData['USR_PHOTO']; ?>" height="30" class="rounded-circle d-inline-block align-text-top" />
             </a>
           </div>
         </div>
@@ -116,11 +104,10 @@ if(isset($_POST['ubah'])) {
             <input value="<?= $datKej['R_ID_KJD']?>" type="number" class="form-control" name="R_ID_KJD" required>
         </div>
         <div class="form-group">
-            <label>User ID</label>
-            <input value="<?= $datKej['USR_ID_KJD']?>" type="number" class="form-control" name="USR_ID_KJD" readonly required>
+            <input value="<?= $datKej['USR_ID_KJD']?>" type="hidden" class="form-control" name="USR_ID_KJD" readonly required>
         </div>
-        <button type="submit" class="btn btn-primary mt-2" name="ubah"><i class="bi bi-arrow-up-circle-fill"></i> Update</button>
-        <a href="2_halaman-tabel.php?USR_ID=<?= $idLogin; ?>" type="button" class="btn btn-warning mt-2"><i class="bi bi-table"></i> Kembali</a>
+        <button type="submit" class="btn btn-primary mt-2" name="update"><i class="bi bi-arrow-up-circle-fill"></i> Update</button>
+        <a href="2_halaman-tabel.php" type="button" class="btn btn-warning mt-2"><i class="bi bi-table"></i> Kembali</a>
     </form>
 
   </div>

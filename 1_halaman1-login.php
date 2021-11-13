@@ -1,19 +1,18 @@
 <?php 
 session_start();
 
+
 if(isset($_SESSION['login'])) {
   header("Location: 2_halaman-tabel.php");
-  // echo "<pre>";
-  // echo var_dump($login);
-  // echo "</pre>";
   exit;
 }
 
 require_once 'functions.php';
 
-// tombol login ditekan
-if(isset($_POST['login'])) {
-  $login = login($_POST);
+if(!isset($_GET["log"])) {
+  $error = "";
+} else {
+  $error = "username/password salah";
 }
 
 ?>
@@ -38,13 +37,11 @@ if(isset($_POST['login'])) {
 
     <main class="form-signin card" >
 
-        <form action="" method="post">
+        <form action="aturlogin.php" method="POST">
           <img id="icon-wolf" class="mx-auto d-block" src="wolf-icon.png" alt="" width="72" height="auto">
-          <!-- <h1 class="h3 mb-3 fw-normal text-center">Login</h1> -->
+          
+          <p class="text-center text-danger"><?= $error; ?></p>
       
-          <?php if(isset($login['error'])) : ?>
-            <p class="text-center text-danger"><?= $login['pesan']; ?></p>
-          <?php endif; ?>
 
           <div class="form-floating">
             <input type="text" class="form-control" name="username" autofocus autocomplete="off" required placeholder="username">
@@ -57,6 +54,8 @@ if(isset($_POST['login'])) {
           </div>
       
           <button class="w-100 btn btn-lg btn-primary" type="submit" name="login">Login</button>
+
+
           <p class="mt-5 mb-3 text-muted text-center">Pemrograman Web Kelas E</p>
         </form>
       </main>

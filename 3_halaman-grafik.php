@@ -5,19 +5,12 @@ if(!isset($_SESSION['login'])) {
   header("Location: 1_halaman1-login.php");
   exit;
 }
-require 'functions.php';
-
-//jika URL tidak mengandung Userid
-if( !isset($_GET['USR_ID']) ) {
-  header("Location: 1_halaman1-login.php");
-  exit;
-}
+require_once 'functions.php';
 
 //ambil id dari URL
-$idLogin = $_GET['USR_ID'];
+$idLogin = $_SESSION["user_id"];
 
 $yangLogin = query("SELECT * FROM user WHERE USR_ID = $idLogin");
-
 
 
 

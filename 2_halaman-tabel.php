@@ -1,8 +1,6 @@
 <?php 
 session_start();
 
-
-
 if(!isset($_SESSION['login'])) {
     header("Location: 1_halaman1-login.php");
     exit;
@@ -10,46 +8,44 @@ if(!isset($_SESSION['login'])) {
 
 require_once 'functions.php';
 
-
-// echo "<pre>";
-// echo var_dump($rows);
-// echo "</pre>";
-
-//jika URL tidak mengandung ID
-if(!isset($_GET['USR_ID'])) {
-  header("Location: 1_halaman1-login.php");
-  exit;
-}
-
-$idOrangLogin = $_GET['USR_ID'];
+$idLogged = $_SESSION["user_id"];
 
 
-//ubah dalam bentuk array
 $dataKejadian = query("SELECT KJD_ID, KJD_ON, KJD_OF, KJD_ACT, KJD_DIS, R_ID_KJD, USR_ID_KJD, R_DESC 
                         FROM kejadian INNER JOIN reason ON kejadian.R_ID_KJD = reason.R_ID 
-                        WHERE USR_ID_KJD=$idOrangLogin
+                        WHERE USR_ID_KJD=$idLogged
                         ORDER BY KJD_ID");
 
-
-// echo "<pre>";
-// echo var_dump($dataKejadian);
-// echo "</pre>";
+$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idLogged");
 
 
-$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idOrangLogin");
-// echo "<pre>";
-// echo var_dump($yangLogin);
-// echo "</pre>";
+if(isset($_POST['delete-data'])) {
+  if( hapus($_POST) > 0 ) {
+    // echo "Data berhasil ditambahkan";
+    echo "
+        <script>
+            alert('data berhasil dihapus');
+            document.location.href = '2_halaman-tabel.php';
+        </script>
+    ";
+  } else {
+      // echo "gagal ditambahkan";
+      echo "
+          <script>
+              alert('data gagal dihapus');
+              document.location.href = '2_halaman-tabel.php';
+          </script>
+      ";
+  }
 
-// $namaKejadian = query("SELECT * FROM reason");
-// echo "<pre>";
-// echo var_dump($namaKejadian);
-// echo "</pre>";
-
-
-if(isset($_POST['cari'])) {
-    $dataKejadian = cari( $_POST['keyword'], $idOrangLogin );
 }
+
+if( isset($_POST["cari"]) ) {
+  
+  $dataKejadian = cari($_POST["keyword"], $idLogged); 
+
+} 
+
 
 ?>
 
@@ -68,6 +64,7 @@ if(isset($_POST['cari'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 
   </head>
+
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-light bg-light">
@@ -92,30 +89,36 @@ if(isset($_POST['cari'])) {
     <div class="container">
         <form action="" method="POST">
             <div class="input-group mt-5">
-                <input type="text" class="form-control" placeholder="Act by or Dis By" autocomplete="off" name="keyword">
+                <input type="text" class="form-control" placeholder="Act by or Dis By" autocomplete="off" name="keyword" autofocus>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" name="cari"><i class="bi bi-search"></i> Cari</button>
                 </div>
             </div>
-        </form>
-        
+        </form> 
     </div>
     
 
     <!-- Button and Table -->
     <section id="button-table" class="p-5">
+
       <div class="container">
+
         <div class="row g-4">
+
           <div class="col">
+
             <div class="row py-1">
-              <a href="tambah.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i> Add</a>
+              <a href="tambah.php" type="button" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i> Add</a>
             </div>
+
             <div class="row py-1">
-              <a href="3_halaman-grafik.php?USR_ID=<?= $idOrangLogin; ?>" type="button" class="btn btn-warning"><i class="bi bi-file-bar-graph-fill"></i> Graph</a>
+              <a href="3_halaman-grafik.php" type="button" class="btn btn-warning"><i class="bi bi-file-bar-graph-fill"></i> Graph</a>
             </div>
+
             <div class="row py-1">
-              <button type="button" class="btn btn-info" disabled>Export</button>
+              <a href="#" type="button" class="btn btn-info"><i class="bi bi-printer"> </i>Export</a>
             </div>
+
             <div class="row py-1">
               <a href="logout.php" type="button" class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> Logout</a>
             </div>
@@ -137,49 +140,65 @@ if(isset($_POST['cari'])) {
                 </div>
               </div>
             </div>
+
           </div>
 
           <div class="col-md-10">
+            
             <table class="table table-bordered">
-              <thead class="table-dark">
-                <tr class="text-center">
-                  <th scope="col">No</th>
-                  <th scope="col">On</th>
-                  <th scope="col">Off</th>
-                  <th scope="col">Ack by</th>
-                  <th scope="col">Reason</th>
-                  <th scope="col">Edit</th>
-                </tr>
-              </thead>
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th scope="col">No</th>
+                        <th scope="col">On</th>
+                        <th scope="col">Off</th>
+                        <th scope="col">Ack by</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
 
-              <?php if(empty($dataKejadian)) : ?>
-                <tr>
-                    <td colspan="6"><p>Data Not Found</p></td>
-                </tr>
-              <?php endif; ?>
+                <?php if(empty($dataKejadian)) : ?>
+                  <tr>
+                      <td colspan="6"><p>Data Not Found</p></td>
+                  </tr>
+                <?php endif; ?>
 
-              <tbody>
-                <?php $i = 1;
-                 foreach($dataKejadian as $datKej) :  ?>
+                <tbody>
+                  <?php $i = 1;
+                  foreach($dataKejadian as $datKej) :  ?>
 
-                <tr>
-                  <th scope="row"> <?=  $i++; ?> </th>
-                  <td> <?= $datKej['KJD_ON']; ?> </td>
-                  <td> <?= $datKej['KJD_OF']; ?> </td>
-                  <td>Act: <?= $datKej['KJD_ACT']; ?> 
-                     <br>Dis: <?= $datKej['KJD_DIS']; ?> 
-                  <td> <?= $datKej['R_DESC']; ?></td>
-                  <td class="text-center">
-                      <a href="ubah.php?USR_ID=<?=$idOrangLogin; ?>&KJD_ID=<?= $datKej['KJD_ID']; ?>"><i class="bi bi-pencil-square"></i></a> 
-                      <a href="hapus.php?USR_ID=<?=$idOrangLogin; ?>&KJD_ID=<?= $datKej['KJD_ID'];  ?>" onclick="return confirm('Hapus Data?');" ><i class="bi bi-trash-fill"></i></a> 
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
+                  <tr>
+                    <th scope="row"> <?=  $i++; ?> </th>
+                    <td> <?= $datKej['KJD_ON']; ?> </td>
+                    <td> <?= $datKej['KJD_OF']; ?> </td>
+                    <td>Act: <?= $datKej['KJD_ACT']; ?> 
+                      <br>Dis: <?= $datKej['KJD_DIS']; ?> 
+                    <td> <?= $datKej['R_DESC']; ?></td>
+                    <td class="text-center">
+                      <div class="btn-group">
+                        <form action="ubah.php" method="POST">
+                          <input type="hidden" name="KJD_ID" value="<?= $datKej['KJD_ID'] ?>">
+                          <button name="update-data" class="btn btn-primary mx-1"><i class="bi bi-pencil-square"></i></button>
+                        </form>
+                        <form action="" method="POST">
+                          <input type="hidden" name="KJD_ID_DELETE" value="<?= $datKej['KJD_ID'] ?>">
+                          <button name="delete-data" class="btn btn-danger mx-1" onclick="return confirm('Hapus Data?');"><i class="bi bi-trash-fill"></i></button>
+                        </form>
+                      </div> 
+                    </td>
+                  </tr>
+                  
+                  <?php endforeach; ?>
+                
+                </tbody>
+            
+              </table>
           </div>
+        
         </div>
+      
       </div>
+
     </section>
     <!-- Closing BUtton and Table -->
 

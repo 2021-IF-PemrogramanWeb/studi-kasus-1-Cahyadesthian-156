@@ -27,6 +27,7 @@
                     <h5 class="card-title text-center">User 1 : Agniasari Candramaya</h5>
                     <p class="card-text"><i class="bi bi-person-circle"></i> Username : agniasari </p>
                     <p class="card-text"><i class="bi bi-key-fill"></i> Password : agniasariPass </p>
+                    <p class="card-text text-center"><small class="text-muted">Original photo by <a href="https://unsplash.com/@uyk">Haryo Setyadi</a> on <a href="https://unsplash.com/">Unsplash</a>, under <a href="https://unsplash.com/license">Unsplash License</a></small></p>
                 </div>
                 </div>
             </div>
@@ -34,12 +35,13 @@
             <!-- card 2 -->
             <div class="col">
                 <div class="card ">
-                <img src="photo/kencana.jpg" class="card-img-top" alt="user2">
-                <div class="card-body">
-                    <h5 class="card-title text-center">User 2 : Kencana Nindita</h5>
-                    <p class="card-text"><i class="bi bi-person-circle"></i> Username : kencana</p>
-                    <p class="card-text"><i class="bi bi-key-fill"></i> Password : kencanaPass</p>
-                </div>
+                    <img src="photo/kencana.jpg" class="card-img-top" alt="user2">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">User 2 : Kencana Nindita</h5>
+                        <p class="card-text"><i class="bi bi-person-circle"></i> Username : kencana</p>
+                        <p class="card-text"><i class="bi bi-key-fill"></i> Password : kencanaPass</p>
+                        <p class="card-text text-center"><small class="text-muted">Original photo by <a href="https://unsplash.com/@dahani">Nada Hanifah</a> on <a href="https://unsplash.com/">Unsplash</a>, under <a href="https://unsplash.com/license">Unsplash License</a></small></p>
+                    </div>
                 </div>
             </div>
 
@@ -51,6 +53,7 @@
                     <h5 class="card-title text-center">User 3 : Sasmaya Ratimaya</h5>
                     <p class="card-text"><i class="bi bi-person-circle"></i> Username : sasmaya</p>
                     <p class="card-text"><i class="bi bi-key-fill"></i> Password : sasmayaPass</p>
+                    <p class="card-text text-center"><small class="text-muted">Original photo by <a href="https://www.pexels.com/@wancukz">destiawan nur agustra</a> on <a href="https://www.pexels.com/">pexels</a>, under <a href="https://www.pexels.com/license/">pexels License</a></small></p>
                 </div>
                 </div>
             </div>

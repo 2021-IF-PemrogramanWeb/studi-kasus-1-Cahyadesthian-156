@@ -5,23 +5,15 @@ if(!isset($_SESSION['login'])) {
     header("Location: 1_halaman1-login.php");
     exit;
 }
-require 'functions.php';
 
-//jika URL tidak mengandung Userid
-if( !isset($_GET['USR_ID']) ) {
-    header("Location: 1_halaman1-login.php");
-    exit;
-}
+require_once 'functions.php';
 
-//ambil id dari URL
-$idUser = $_GET['USR_ID'];
 
-$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idUser");
-// echo "<pre>";
-// echo var_dump($yangLogin);
-// echo "</pre>";
+$idLogged = $_SESSION["user_id"];
+$yangLogin = query("SELECT * FROM user WHERE USR_ID = $idLogged");
 
-if(isset($_POST['tambah'])) {
+
+if(isset($_POST['submit'])) {
     // echo '<pre>';
     // var_dump($_POST);
     // echo '</pre>';
@@ -29,10 +21,14 @@ if(isset($_POST['tambah'])) {
         //echo "data berhasil ditambahkan";
         echo "<script>
                alert('data berhasil ditambahkan');
-               document.location.href = '2_halaman-tabel.php?USR_ID=$idUser';
+               document.location.href = '2_halaman-tabel.php';
             </script>";
     } else {
-        echo "data gagal ditambahkan!";
+        echo "
+          <script>
+            alert('data gagal ditambahkan');
+            document.location.href = '2_tableview_2_update.php';
+          </script>";
     }
 }
 
@@ -87,7 +83,7 @@ if(isset($_POST['tambah'])) {
             <input type="datetime-local" class="form-control" name="KJD_ON" required>
         </div>
         <div class="form-group">
-            <label>OF</label>
+            <label>OFF</label>
             <input type="datetime-local" class="form-control" name="KJD_OF" required>
         </div>
         <div class="form-group">
@@ -103,11 +99,11 @@ if(isset($_POST['tambah'])) {
             <input type="number" class="form-control" name="R_ID_KJD" required>
         </div>
         <div class="form-group">
-            <label>User ID</label>
-            <input type="number" class="form-control" name="USR_ID_KJD" required>
+          <input type="hidden" class="form-control" name="USR_ID_KJD" required value="<?= $yangLogin['USR_ID']; ?>" readonly>
         </div>
-        <button type="submit" class="btn btn-primary mt-2" name="tambah"><i class="bi bi-cloud-arrow-up-fill"></i> Submit</button>
-        <a href="2_halaman-tabel.php?USR_ID=<?= $idUser; ?>" type="button" class="btn btn-warning mt-2"><i class="bi bi-table"></i> Kembali</a>
+
+        <button type="submit" class="btn btn-primary mt-2" name="submit"><i class="bi bi-cloud-arrow-up-fill"></i> Submit</button>
+        <a href="2_halaman-tabel.php" type="button" class="btn btn-warning mt-2"><i class="bi bi-table"></i> Kembali</a>
     </form>
 
   </div>
