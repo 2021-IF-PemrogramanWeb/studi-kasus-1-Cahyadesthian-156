@@ -7,11 +7,9 @@ if(!isset($_SESSION['login'])) {
 }
 require_once 'functions.php';
 
-//ambil id dari URL
 $idLogin = $_SESSION["user_id"];
 
 $yangLogin = query("SELECT * FROM user WHERE USR_ID = $idLogin");
-
 
 
 //query 
@@ -102,9 +100,6 @@ $labelData15 = $label15Temp['R_DESC'];
 $label16Temp = ($buatLabel[15]);
 $labelData16 = $label16Temp['R_DESC'];
 
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -128,7 +123,7 @@ $labelData16 = $label16Temp['R_DESC'];
   <body>
 
      <!-- Navbar -->
-    <nav class="navbar navbar-light bg-light">
+    <nav class="shadow navbar fixed-top navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
@@ -148,7 +143,7 @@ $labelData16 = $label16Temp['R_DESC'];
     <!-- Closing Navbar -->
 
     <!-- Container Chart -->
-    <div class="container">
+    <div class="container" style="padding-top: 86px;">
       <canvas id="myChart"></canvas>
     </div>
 

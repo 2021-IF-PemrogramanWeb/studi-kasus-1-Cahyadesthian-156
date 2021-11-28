@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/u1529797/public_html/studikasus1-pweb-kelas-e-2021-05111940000156/
+    - /bin/cp -R * $DEPLOYPATH

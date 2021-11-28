@@ -13,9 +13,11 @@ $idLogged = $_SESSION["user_id"];
 $someoneData = query("SELECT * FROM user WHERE USR_ID = $idLogged");
 
 $idToUpdate = $_POST["KJD_ID"];
+$conn = koneksi(); 
+$idToUpdate_esc_str = mysqli_real_escape_string($conn, $idToUpdate);
 
 //query
-$datKej = query("SELECT * FROM kejadian WHERE KJD_ID = $idToUpdate");
+$datKej = query("SELECT * FROM kejadian WHERE KJD_ID = $idToUpdate_esc_str");
     
 
 if( isset($_POST['update']) ) {
@@ -56,7 +58,7 @@ if( isset($_POST['update']) ) {
   <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-light bg-light">
+  <nav class="shadow navbar navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />

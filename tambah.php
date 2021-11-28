@@ -53,7 +53,7 @@ if(isset($_POST['submit'])) {
   <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-light bg-light">
+  <nav class="shadow navbar navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />

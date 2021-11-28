@@ -30,8 +30,15 @@ function tambah($data) {
     $rIdKjd = htmlspecialchars($data['R_ID_KJD']);
     $usrIdKjd = htmlspecialchars($data['USR_ID_KJD']);
 
+    $kjdOn_esc_str = mysqli_real_escape_string($conn, $kjdOn);
+    $kjdOf_esc_str = mysqli_real_escape_string($conn,$kjdOf);
+    $kjdAct_esc_str = mysqli_real_escape_string($conn,$kjdAct);
+    $kjdDis_esc_str = mysqli_real_escape_string($conn,$kjdDis);
+    $rIdKjd_esc_str = mysqli_real_escape_string($conn,$rIdKjd);
+    $usrIdKjd_esc_str = mysqli_real_escape_string($conn,$usrIdKjd);
 
-    $query = "INSERT INTO kejadian(KJD_ON,KJD_OF,KJD_ACT,KJD_DIS,R_ID_KJD,USR_ID_KJD) VALUES ('$kjdOn', '$kjdOf', '$kjdAct', '$kjdDis', '$rIdKjd', '$usrIdKjd');";
+
+    $query = "INSERT INTO kejadian(KJD_ON,KJD_OF,KJD_ACT,KJD_DIS,R_ID_KJD,USR_ID_KJD) VALUES ('$kjdOn_esc_str', '$kjdOf_esc_str', '$kjdAct_esc_str', '$kjdDis_esc_str', '$rIdKjd_esc_str', '$usrIdKjd_esc_str');";
 
     mysqli_query($conn, $query) or die(mysqli_error($conn));
 
@@ -72,12 +79,16 @@ function ubah($idKej) {
     $rIdKjd = htmlspecialchars($idKej['R_ID_KJD']);
     $usrIdKjd = htmlspecialchars($idKej['USR_ID_KJD']);
 
+    $kjdId_esc_str = mysqli_real_escape_string($conn, $kjdId);
+    $kjdAct_esc_str = mysqli_real_escape_string($conn, $kjdAct);
+    $kjdDis_esc_str = mysqli_real_escape_string($conn, $kjdDis);
+    $rIdKjd_esc_str = mysqli_real_escape_string($conn, $rIdKjd);
 
     $query = "UPDATE kejadian SET 
-                KJD_ACT = '$kjdAct',
-                KJD_DIS = '$kjdDis',
-                R_ID_KJD = '$rIdKjd'
-              WHERE KJD_ID = '$kjdId'";
+                KJD_ACT = '$kjdAct_esc_str',
+                KJD_DIS = '$kjdDis_esc_str',
+                R_ID_KJD = '$rIdKjd_esc_str'
+              WHERE KJD_ID = '$kjdId_esc_str'";
 
     mysqli_query($conn, $query) or die(mysqli_error($conn));
 
@@ -96,12 +107,15 @@ function ubah($idKej) {
 function cari($keyword , $someoneLogged) {
     $conn = koneksi();
 
+    $keyword_esc_str = mysqli_real_escape_string($conn, $keyword);
+    $someoneLogged_esc_str = mysqli_real_escape_string($conn, $someoneLogged);
+
     $query = "SELECT KJD_ID, KJD_ON, KJD_OF, KJD_ACT, KJD_DIS, R_ID_KJD, USR_ID_KJD, R_DESC 
                 FROM kejadian INNER JOIN reason ON kejadian.R_ID_KJD = reason.R_ID
                 WHERE  
-                (KJD_ACT LIKE '%$keyword%' OR
-                KJD_DIS LIKE '%$keyword%') AND
-                USR_ID_KJD = $someoneLogged
+                (KJD_ACT LIKE '%$keyword_esc_str%' OR
+                KJD_DIS LIKE '%$keyword_esc_str%') AND
+                USR_ID_KJD = $someoneLogged_esc_str
                 ORDER BY KJD_ID	
             ";
 

@@ -67,7 +67,7 @@ if( isset($_POST["cari"]) ) {
 
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-light">
+    <nav class="shadow navbar fixed-top navbar-light bg-light">
       <div class="container">
         <a class="navbar-brand" href="#">
           <img src="wolf-icon.png" alt="" width="30" class="d-inline-block align-text-top" />
@@ -86,7 +86,7 @@ if( isset($_POST["cari"]) ) {
     </nav>
     <!-- Closing Navbar -->
 
-    <div class="container">
+    <div class="container" style="padding-top: 40px;">
         <form action="" method="POST">
             <div class="input-group mt-5">
                 <input type="text" class="form-control" placeholder="Act by or Dis By" autocomplete="off" name="keyword" autofocus>

@@ -7,8 +7,13 @@ require_once 'functions.php';
 $username_logged =  $_POST["username"];
 $password_logged = $_POST["password"];
 
-$queryLoginInfo= "SELECT * FROM user WHERE USR_USERNAME = '$username_logged' && USR_PASSSWORD = '$password_logged' " ;
 $conn = koneksi();
+
+$username_logged_esc_str = mysqli_real_escape_string($conn, $username_logged);
+$password_logged_esc_str = mysqli_real_escape_string($conn, $password_logged);
+
+$queryLoginInfo= "SELECT * FROM user WHERE USR_USERNAME = '$username_logged_esc_str' && USR_PASSSWORD = '$password_logged_esc_str' " ;
+
 $cekLogin = mysqli_query($conn, $queryLoginInfo);
 
 if( mysqli_num_rows($cekLogin) != 1 ) {
@@ -37,7 +42,7 @@ if( mysqli_num_rows($cekLogin) === 1 ) {
 </head>
 <body>
 
-<form name="myForm" id="myForm" target="" action="2_halaman-tabel.php" method="POST">
+<form name="myForm" id="myForm" target="" action="2_halaman-tabel.php" method="POST" style="visibility: hidden;">
         <input type="number" class="form-control" name="user_id_login" required placeholder="user_id_login" value="<?= $someoneData['USR_ID']; ?>">
         <input type="submit" value="Submit" />
 </form>
